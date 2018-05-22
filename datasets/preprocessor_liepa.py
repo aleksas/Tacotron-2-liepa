@@ -3,6 +3,7 @@ from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from datasets import audio
 import os
+from os import listdir
 import numpy as np
 from wavenet_vocoder.util import mulaw_quantize, mulaw, is_mulaw, is_mulaw_quantize
 from os.path import join, splitext, isdir
@@ -55,13 +56,15 @@ def load_text(txt_path):
 	elif charenc == 'ISO-8859-1':
 	    charenc = 'windows-1257'
 
+	text = None
 	with codecs.open(txt_path, encoding=charenc) as fin:
 	    text = fin.read()
 	    for m in meta:
 	        text = text.replace(m, '')
 	    for mm_p, mm_r in meta_m:
 	        text = text.replace(mm_p, mm_r)
-	    text = text.replace('\n', ' ').replace('\r', '').strip()
+	    text = text.replace('\n', ' ').replace('\r', '').strip().lower()
+	return ' '.join(text.split())
 
 def get_sentence_subdirectories(a_dir):
 	return [name for name in listdir(a_dir)

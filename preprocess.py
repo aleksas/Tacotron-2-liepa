@@ -15,7 +15,7 @@ def preprocess(args, input_folders, out_dir, hparams):
 	os.makedirs(linear_dir, exist_ok=True)
 
 	if args.dataset.startswith('liepa'):
-		metadata = preprocessor_liepa.build_from_path(hparams, input_folders, 'D150', mel_dir, linear_dir, wav_dir, args.n_jobs, tqdm=tqdm)
+		metadata = preprocessor_liepa.build_from_path(hparams, input_folders, 'D150', None, mel_dir, linear_dir, wav_dir, args.n_jobs, tqdm=tqdm)
 	else:
 		metadata = preprocessor.build_from_path(hparams, input_folders, mel_dir, linear_dir, wav_dir, args.n_jobs, tqdm=tqdm)
 
@@ -49,7 +49,7 @@ def norm_data(args):
 		return [os.path.join(args.base_dir, args.dataset)]
 
 	if args.dataset.startswith('liepa'):
-		return [os.path.join(args.base_dir, args.dataset)]
+		return [args.base_dir]
 
 	if args.dataset == 'M-AILABS':
 		supported_languages = ['en_US', 'en_UK', 'fr_FR', 'it_IT', 'de_DE', 'es_ES', 'ru_RU',
