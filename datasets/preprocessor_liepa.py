@@ -35,7 +35,7 @@ def build_from_path(hparams, input_dirs, speaker, max_files_per_speaker, mel_dir
 	futures = []
 	index = 1
 	for input_dir in input_dirs:
-		for wav_path in collect_files(input_dir, speaker, max_files_per_speaker):
+		for wav_path in collect_files(input_dir, max_files_per_speaker):
 			txt_path = wav_path.replace('.wav','.txt')
 			text = load_text(txt_path)
 			futures.append(executor.submit(partial(_process_utterance, mel_dir, linear_dir, wav_dir, index, wav_path, text, hparams)))
@@ -70,17 +70,13 @@ def get_sentence_subdirectories(a_dir):
 	return [name for name in listdir(a_dir)
 		if isdir(join(a_dir, name)) and name.startswith('S')]
 
-def collect_files(data_root, speaker, max_files_per_speaker=None):
+def collect_files(speaker_dir, max_files_per_speaker=None):
 	"""Collect wav files for specific speakers.
 
 	Returns:
 	    list: List of collected wav files.
 	"""
-	speaker_dir = join(data_root, speaker)
 	paths = []
-
-	if not isdir(data_root):
-		raise RuntimeError("{} doesn't exist.".format(data_root))
 	if not isdir(speaker_dir):
 		raise RuntimeError("{} doesn't exist.".format(speaker_dir))
 	for sd in get_sentence_subdirectories(speaker_dir):
