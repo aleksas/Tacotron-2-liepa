@@ -224,14 +224,17 @@ def train(log_dir, args, hparams, input_path):
 				if step % args.summary_interval == 0:
 					log('\nWriting summary at step {}'.format(step))
 					summary_writer.add_summary(sess.run(stats), step)
+					backup_state(log_dir)
 
 				if step % args.checkpoint_interval == 0 or step == args.wavenet_train_steps:
 					save_log(sess, step, model, plot_dir, audio_dir, hparams=hparams)
 					save_checkpoint(sess, sh_saver, checkpoint_path, global_step)
+					backup_state(log_dir)
 
 				if step % args.eval_interval == 0:
 					log('\nEvaluating at step {}'.format(step))
 					eval_step(sess, step, eval_model, eval_plot_dir, eval_audio_dir, summary_writer=summary_writer , hparams=model._hparams)
+					backup_state(log_dir)
 
 			log('Wavenet training complete after {} global steps'.format(args.wavenet_train_steps))
 			return save_dir
@@ -261,7 +264,7 @@ def backup_state(log_dir):
 	zf.close()
 
 	auth.authenticate_user()
-	
+
 	drive_service = build('drive', 'v3')
 
 	file_metadata = {
@@ -276,4 +279,4 @@ def backup_state(log_dir):
 	                                       media_body=media,
 	                                       fields='id').execute()
 
-	print('File ID: {}'.format(created.get('id')))
+	log('\nBackup File ID: {}'.format(created.get('id')))
