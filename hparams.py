@@ -189,43 +189,25 @@ hparams = tf.contrib.training.HParams(
 
 	#Eval sentences (if no eval file was specified, these sentences are used for eval)
 	sentences = [
-	# From July 8, 2017 New York Times:
-	'Scientists at the CERN laboratory say they have discovered a new particle.',
-	'There\'s a way to measure the acute emotional intelligence that has never gone out of style.',
-	'President Trump met with other leaders at the Group of 20 conference.',
-	'The Senate\'s bill to repeal and replace the Affordable Care Act is now imperiled.',
-	# From Google's Tacotron example page:
-	'Generative adversarial network or variational auto-encoder.',
-	'Basilar membrane and otolaryngology are not auto-correlations.',
-	'He has read the whole thing.',
-	'He reads books.',
-	"Don't desert me here in the desert!",
-	'He thought it was time to present the present.',
-	'Thisss isrealy awhsome.',
-	'Punctuation sensitivity, is working.',
-	'Punctuation sensitivity is working.',
-	"The buses aren't the problem, they actually provide a solution.",
-	"The buses aren't the PROBLEM, they actually provide a SOLUTION.",
-	"The quick brown fox jumps over the lazy dog.",
-	"does the quick brown fox jump over the lazy dog?",
-	"Peter Piper picked a peck of pickled peppers. How many pickled peppers did Peter Piper pick?",
-	"She sells sea-shells on the sea-shore. The shells she sells are sea-shells I'm sure.",
-	"The blue lagoon is a nineteen eighty American romance adventure film.",
-	"Tajima Airport serves Toyooka.",
-	'Talib Kweli confirmed to AllHipHop that he will be releasing an album in the next year.',
-	#From Training data:
-	'the rest being provided with barrack beds, and in dimensions varying from thirty feet by fifteen to fifteen feet by ten.',
-	'in giltspur street compter, where he was first lodged.',
-	'a man named burnett came with his wife and took up his residence at whitchurch, hampshire, at no great distance from laverstock,',
-	'it appears that oswald had only one caller in response to all of his fpcc activities,',
-	'he relied on the absence of the strychnia.',
-	'scoggins thought it was lighter.',
-	'''would, it is probable, have eventually overcome the reluctance of some of the prisoners at least,
-	and would have possessed so much moral dignity''',
-	'''Sequence to sequence models have enjoyed great success in a variety of tasks such as machine translation, speech recognition, and text summarization.
-	This project covers a sequence to sequence model trained to predict a speech representation from an input sequence of characters. We show that
-	the adopted architecture is able to perform this task with wild success.''',
-	'Thank you so much for your support!',
+	# From Liepa database teksto_pavyzdys.txt:
+	'Paulius Grinkevičius',
+	'15min.lt',
+	'IT specialistai Lietuvoje ir toliau gyvens kaip karaliai – jų reiks 5 kartus daugiau, nei gali pasiūlyti aukštosios mokyklos',
+	'Per ateinančius trejus metus Lietuvoje informacinių technologijų ir ryšių (IRT) specialistų reikės penkis kartus daugiau, nei parengs mūsų aukštosios mokyklos. Tai stabdys tiek didelių, tiek ir smulkių bei vidutinių įmonių augimą ir lems dar didesnę konkurenciją IT sektoriuje, rodo INFOBALT atliktas IT specialistų poreikio tyrimas.',
+	'"INFOBALT" Inovacijų vadovas Andrius Plečkaitis antradienį apžvelgdamas pastarųjų metų IT specialistų poreikio augimo tendencijas sakė, kad darbo vietų poreikio augimas susijęs su užsienio kapitalo IT įmonių atėjimu į Lietuvą, taip pat auga ir vietos kapitalo įmonės – vien jų eksportas į užsienį pernai padidėjo 82 procentais.',
+	'Į informacines ir ryšių technologijas (IRT) stojančiųjų mažėja nuo 2008 m., kitąmet tikimasi, kad pirmą kartą per penkerius metus šis skaičius pradės augti.',
+	'Apklausę įmones matome, kad apie 90 proc. įmonių nori didinti darbuotojų skaičių. 2014–2016 metais reiks 17,5 tūkst. specialistų, aukštosios mokyklos paruoš 3,2 tūkstančių, – sako A.Plečkaitis. – Tokius rezultatus lemia įmonių, tarp jų ir startuolių, augimas. 46 proc. smulkių, iki dešimties darbuotojų turinčių įmonių artimiausiais metais žada plėstis ir samdyti naujų darbuotojų, mažos ir vidutinės – 11 proc., o stambios įmonės – 14 procentų.',
+	'Pasak A.Plečkaičio, didelį nerimą kelia ir tai, kad studijas baigia tik maždaug pusė įstojusių į IRT specialybes. Bendrai aukštąsias mokyklas Lietuvoje baigia daugiau kaip 62 proc. studentų, o IRT specialybių – 51 procentas.',
+	'Penki pasiūlymai per savaitę',
+	'Personalo atrankos įmonės "Alliance for Recruitment" partneris Vytenis Šidlauskas kalba, kad IRT specialistų poreikis dėl technologijų skverbties į mūsų gyvenimą bus dar didesnis.',
+	'Pasak jo, paprasti darbo skelbimai su siūlymais nebepatraukia darbuotojų dėmesio – esą bene vienintelis būdas prisivilioti gerą IT specialistą – jį pervilioti iš kitos įmonės. O toks darbuotojų persamdymas kenkia visai rinkai.',
+	'"Pralošia ir ta įmonė, kuri prisivilioja darbuotoją, taip pat ir ta, kuri jo netenka, nes reikia kelti atlyginimus. Šalies konkurencingumo mastu naudos praktiškai nėra. Mūsų jau nestebina, kad paskambinus IT specialistui pakviesti į darbo pokalbį šis sako – "esate penktas, kuris man skambina dėl IRT darbo šią savaitę", – pasakoja V.Šidlauskas.',
+	'Jis vidurinių mokyklų moksleivius ragina rinktis IT specialybes, kurios garantuos ir stabilias pajamas ateityje. V.Šidlauskas sako, kad IRT studijas baigęs ir maždaug trejų metų patirtį turintis specialistas nesunkiai per mėnesį gali uždirbti 4–5 tūkst. litų.',
+	'IT specialistų stygius kels paslaugų kainas',
+	'Švietimo ir mokslo ministerijos atstovas Rimantas Vaitkus sako, kad su IT specialistų trūkumu susiduriame ir kitose šalyse.',
+	'Pasak jo, IT specialistų poreikio problemas ketinama spręsti didinant valstybės užsakymų dalį į šias specialybes, pagerinus studijų apmokėjimo sąlygas.',
+	'Tyrime pateikiamos išvados, kad sparčiausiai turėtų augti stambios IT įmonės, o vidutinio dydžio IT įmonės konkuruos su didelėmis ir didins atlyginimus, o tai kels IT paslaugų ir produktų kainas.',
+	'Be to, problemų turės ir startuolių įmonės, nes šioms bus sunku pritraukti kvalifikuotų specialistų.',
 	]
 
 	)
