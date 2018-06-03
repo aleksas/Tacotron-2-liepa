@@ -213,6 +213,9 @@ def train(log_dir, args, hparams):
 						wav = audio.inv_linear_spectrogram(lin_p.T, hparams)
 						audio.save_wav(wav, os.path.join(eval_wav_dir, 'step-{}-eval-waveform-linear.wav'.format(step)), sr=hparams.sample_rate)
 					else:
+						# TODO FIX this hack
+						if feeder.test_steps == 0:
+							feeder.test_steps = 1
 						for i in tqdm(range(feeder.test_steps)):
 							eloss, before_loss, after_loss, stop_token_loss, mel_p, mel_t, t_len, align = sess.run(
 								[eval_model.loss, eval_model.before_loss, eval_model.after_loss,
@@ -296,7 +299,7 @@ def train(log_dir, args, hparams):
 					log('Input at step {}: {}'.format(step, sequence_to_text(input_seq)))
 
 					backup_state(log_dir)
-					
+
 			log('Tacotron training complete after {} global steps!'.format(args.tacotron_train_steps))
 			return save_dir
 
