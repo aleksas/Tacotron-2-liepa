@@ -247,6 +247,7 @@ def train(log_dir, args, hparams):
 					add_eval_stats(summary_writer, step, linear_loss, before_loss, after_loss, stop_token_loss, eval_loss)
 
 				if step % args.checkpoint_interval == 0 or step == args.tacotron_train_steps:
+					clear_state(save_dir)
 					#Save model and current global step
 					saver.save(sess, checkpoint_path, global_step=global_step)
 
@@ -294,8 +295,7 @@ def train(log_dir, args, hparams):
 						info='{}, {}, step={}, loss={:.5}'.format(args.model, time_string(), step, loss), target_spectrogram=target,
 						max_len=target_length)
 					log('Input at step {}: {}'.format(step, sequence_to_text(input_seq)))
-
-					backup_state(log_dir, save_dir)
+					backup_state(log_dir)
 
 			log('Tacotron training complete after {} global steps!'.format(args.tacotron_train_steps))
 			return save_dir
@@ -315,10 +315,11 @@ from google.colab import auth
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-def backup_state(log_dir, save_dir):
+def clear_state(save_dir):
 	for f in os.listdir(save_dir):
-        	os.remove(os.path.join(save_dir, f))
-	
+		os.remove(os.path.join(save_dir, f))
+		
+def backup_state(log_dir):
 	container = "logs-Tacotron.zip"
 
 	zf = zipfile.ZipFile(container, "w")
