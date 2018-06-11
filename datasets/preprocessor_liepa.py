@@ -68,7 +68,7 @@ def load_text(txt_path):
 
 def get_sentence_subdirectories(a_dir):
 	return [name for name in listdir(a_dir)
-		if isdir(join(a_dir, name)) and name.startswith('S')]
+		if isdir(join(a_dir, name))]
 
 def collect_files(speaker_dir, max_files_per_speaker=None):
 	"""Collect wav files for specific speakers.
