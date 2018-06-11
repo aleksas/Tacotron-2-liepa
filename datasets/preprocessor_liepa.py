@@ -63,7 +63,7 @@ def load_text(txt_path):
 	        text = text.replace(m, '')
 	    for mm_p, mm_r in meta_m:
 	        text = text.replace(mm_p, mm_r)
-	    text = text.replace('\n', ' ').replace('\r', '').strip().lower()
+	    text = text.replace('\n', ' ').replace('\r', '').strip()
 	return ' '.join(text.split())
 
 def get_sentence_subdirectories(a_dir):
