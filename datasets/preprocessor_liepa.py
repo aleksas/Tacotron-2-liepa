@@ -1,4 +1,4 @@
-from os.path import join
+from os.path import join, isfile
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from datasets import audio
@@ -37,9 +37,10 @@ def build_from_path(hparams, input_dirs, max_files_per_speaker, mel_dir, linear_
 	for input_dir in input_dirs:
 		for wav_path in collect_files(input_dir, max_files_per_speaker):
 			txt_path = wav_path.replace('.wav','.txt')
-			text = load_text(txt_path)
-			futures.append(executor.submit(partial(_process_utterance, mel_dir, linear_dir, wav_dir, index, wav_path, text, hparams)))
-			index += 1
+			if isfile(txt_path):
+				text = load_text(txt_path)
+				futures.append(executor.submit(partial(_process_utterance, mel_dir, linear_dir, wav_dir, index, wav_path, text, hparams)))
+				index += 1
 
 	return [future.result() for future in tqdm(futures) if future.result() is not None]
 
