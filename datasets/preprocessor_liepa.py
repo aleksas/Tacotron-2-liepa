@@ -47,9 +47,7 @@ def load_text(txt_path):
 	text = None
 	print (txt_path)
 	with open(txt_path, 'rb') as f:
-		contents = f.read()
-		text = contents.rstrip("\n").decode("utf-8")
-		text = text.replace("\r\n", '')
+		text = f.read().decode("utf-8")
 		
 	return text
 
