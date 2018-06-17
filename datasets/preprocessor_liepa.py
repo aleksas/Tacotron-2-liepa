@@ -44,27 +44,11 @@ def build_from_path(hparams, input_dirs, max_files_per_speaker, mel_dir, linear_
 	return [future.result() for future in tqdm(futures) if future.result() is not None]
 
 def load_text(txt_path):
-	raw_text = None
-	with open(txt_path, 'rb') as f:
-		raw_text = f.read()
-
-	result = chardet.detect(raw_text)
-	charenc = result['encoding']
-
-	if charenc == 'UTF-16':
-	    charenc = "utf-16le"
-	elif charenc == 'ISO-8859-1':
-	    charenc = 'windows-1257'
-
 	text = None
-	with codecs.open(txt_path, encoding=charenc) as fin:
-	    text = fin.read()
-	    for m in meta:
-	        text = text.replace(m, '')
-	    for mm_p, mm_r in meta_m:
-	        text = text.replace(mm_p, mm_r)
-	    text = text.replace('\n', ' ').replace('\r', '').strip()
-	return ' '.join(text.split())
+	with open(txt_path, 'r') as f:
+		text = f.read()
+		
+	return text
 
 def get_sentence_subdirectories(a_dir):
 	return [name for name in listdir(a_dir)
@@ -88,27 +72,6 @@ def collect_files(speaker_dir, max_files_per_speaker=None):
 			paths.append(f)
 
 	return paths
-
-meta = [
-	'_nurijimas', '_pilvas', '_pauze', '_tyla',
-	'_ikvepimas', '_iskvepimas', '_garsas',
-	'_puslapis', '_puslpais', '_kede', '_durys',
-	'_cepsejimas'
-]
-
-meta_m = [
-	('septyni_ty', 'septyni'), ('aštuoni_tuo', 'aštuoni'), ('devyni_vy','devyni'),
-	('pirma_pir', 'pirma'), ('antra_an', 'antra'), ('trečia_tre', 'trečia'),
-	('ketvirta_vir', 'ketvirta'), ('penkta_pen', 'penkta'), ('šešta_šeš', 'šešta'),
-	('septinta_tin', 'septinta'), ('aštunta_tun', 'aštunta'), ('devinta_vin', 'devinta'),
-	('dešimta_ši', 'dešimta'), ('procentų_cen', 'procentų'), ('vadinamaa_maa','vadinama'),
-	('aplankų_ap', 'aplankų'), ('veiklų_veik', 'veiklų'), ('_įtrūkimu', 'įtrūkimu'),
-	('sugriauta_ta', 'sugriauta'), ('laikomi_mi', 'laikomi'), ('siauros_siau', 'siauros'),
-	('_padpadėtis', 'padpadėtis'), ('_klėstinčiu', 'klestinčiu'), ('langus_gus', 'langus'),
-	('eštuoni_tuo', 'aštuoni'), ('architektūra_tū', 'architektūra'), ('rezultatus_ta', 'rezultatus'),
-	('ketvyrta_vyr', 'ketvyrta'), ('_koplystulpiai', 'koplystulpiai')
-]
-
 
 def _process_utterance(mel_dir, linear_dir, wav_dir, index, wav_path, text, hparams):
 	"""
