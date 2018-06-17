@@ -46,8 +46,10 @@ def build_from_path(hparams, input_dirs, max_files_per_speaker, mel_dir, linear_
 def load_text(txt_path):
 	text = None
 	print (txt_path)
-	with open(txt_path, 'r') as f:
-		text = f.read()
+	with open(txt_path, 'rb') as f:
+		contents = f.read()
+		text = contents.rstrip("\n").decode("utf-8")
+		text = text.split("\r\n")
 		
 	return text
 
